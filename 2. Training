@@ -1,5 +1,6 @@
 
 where to find all existing aws prebuiltin container images
+AWS deep learning containers : https://github.com/aws/deep-learning-containers 
 
 example of sagemaker inbuilt xgboost uri
 
