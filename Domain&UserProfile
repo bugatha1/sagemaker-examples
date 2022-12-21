@@ -1,0 +1,26 @@
+
+https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateDomain.html 
+
+CreateDomain:
+  Creates a Domain used by Amazon SageMaker Studio. 
+  A domain consists of an associated Amazon Elastic File System (EFS) volume, 
+  a list of authorized users, and a variety of security, application, policy, 
+  and Amazon Virtual Private Cloud (VPC) configurations. 
+  An AWS account is limited to one domain per region. 
+  Users within a domain can share notebook files and other artifacts with each other.
+  
+  EFS storage
+    When a domain is created, an EFS volume is created for use by all of the users within the domain. 
+    Each user receives a private home directory within the EFS volume for notebooks, Git repositories, and data files.
+    
+  VPC configuration
+      PublicInternetOnly
+      VpcOnly
+      
+      
+      Domain: default-1649424981853
+      User : newuser1
+      new user: default-1671606960233
+      Role : AmazonSageMaker-ExecutionRole-20221221T004891
+      new role: AmazonSageMaker-ExecutionRole-20221221T011661
+    
