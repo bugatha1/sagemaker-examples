@@ -1,1 +1,55 @@
 https://sagemaker-examples.readthedocs.io/en/latest/sagemaker_neo_compilation_jobs/pytorch_torchvision/pytorch_torchvision_neo_outputs.html
+
+
+https://sagemaker-examples.readthedocs.io/en/latest/sagemaker-script-mode/pytorch_bert/deploy_bert_outputs.html
+
+Package Model
+
+For hosting, SageMaker requires that the deployment package be structured in a compatible format. 
+It expects all files to be packaged in a tar archive named “model.tar.gz” with gzip compression. 
+To install additional libraries at container startup, 
+we can add a requirements.txt file that specifies the libraries to be installed using pip.
+
+
+Deploy Model
+
+
+from sagemaker.pytorch import PyTorchModel
+from sagemaker import get_execution_role
+import time
+
+endpoint_name = "bert-base-" + time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
+
+model = PyTorchModel(
+    entry_point="inference_code.py",
+    model_data=zipped_model_path,
+    role=get_execution_role(),
+    framework_version="1.5",
+    py_version="py3",
+)
+
+predictor = model.deploy(
+    initial_instance_count=1, instance_type="ml.m5.xlarge", endpoint_name=endpoint_name
+)
+
+Get Predictions
+
+import sagemaker
+
+sm = sagemaker.Session().sagemaker_runtime_client
+
+prompt = "The best part of Amazon SageMaker is that it makes machine learning easy."
+
+response = sm.invoke_endpoint(
+    EndpointName=endpoint_name, Body=prompt.encode(encoding="UTF-8"), ContentType="text/csv"
+)
+
+response["Body"].read()
+
+
+
+Cleanup
+Delete the model and endpoint to release resources and stop incurring costs.
+
+predictor.delete_model()
+predictor.delete_endpoint()
